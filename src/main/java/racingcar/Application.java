@@ -73,7 +73,7 @@ public class Application {
         try {
             checkCar(cars);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            throw new IllegalArgumentException("IllegalArgumentException");
         }
 
         // 경주 횟수 입력
@@ -83,13 +83,13 @@ public class Application {
         try {
             n = checkNum(num);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            throw new IllegalArgumentException("IllegalArgumentException");
         }
 
         // Car 객체 목록 생성
         ArrayList<Car> carList = new ArrayList<>();
         for (String carName : cars) {
-            Car n_car = new Car(carName);
+            Car n_car = new Car(carName.trim());
             carList.add(n_car);
         }
         
