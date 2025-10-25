@@ -37,6 +37,33 @@ public class Application {
         }
     }
 
+    public static void printResult(ArrayList<Car> cars) {
+        for (Car car : cars) {
+            System.out.print(car.getName() + " : ");
+            for (int i = 0; i < car.getDistance(); i++) {
+                System.out.print("-");
+            }
+            System.out.println();
+        }
+    }
+
+    public static String findWinner(ArrayList<Car> cars) {
+        int max = cars.getFirst().getDistance();
+        for (Car car : cars) {
+            if (car.getDistance() > max) {
+                max = car.getDistance();
+            }
+        }
+        String winner = "";
+        for (Car car : cars) {
+            if (car.getDistance() == max) {
+                winner += car.getName() + ", ";
+            }
+        }
+        winner = winner.substring(0, winner.length() - 2);
+        return winner;
+    }
+
     public static void main(String[] args) {
         System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
 
@@ -67,8 +94,15 @@ public class Application {
         }
         
         // 입력받은 n번 만큼 round 진행
+        // 게임결과 확인 및 출력
+        System.out.println("\n실행 결과");
         for (int i = 0; i < n; i++) {
             roundResult(carList);
+            printResult(carList);
+            System.out.println();
         }
+        
+        // 최종 우승자 출력
+        System.out.println("최종 우승자 : " + findWinner(carList));
     }
 }
