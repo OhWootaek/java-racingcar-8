@@ -1,5 +1,7 @@
 package racingcar;
 
+import camp.nextstep.edu.missionutils.Randoms;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +16,7 @@ public class Application {
         }
     }
 
-    public static void checkNum(String num) throws IllegalArgumentException {
+    public static int checkNum(String num) throws IllegalArgumentException {
         int number;
         try {
             number = Integer.parseInt(num);
@@ -22,6 +24,17 @@ public class Application {
             throw new IllegalArgumentException("IllegalArgumentException");
         }
         if (number <= 0) throw new IllegalArgumentException("IllegalArgumentException");
+        return number;
+    }
+    
+    // 각 라운드 별로 각각의 Car 객체가 전진할지 여부를 결정
+    public static void roundResult(ArrayList<Car> cars) {
+        for (Car car : cars) {
+            int i = Randoms.pickNumberInRange(0, 9);
+            if (i >= 4) {
+                car.setDistance(car.getDistance() + 1);
+            }
+        }
     }
 
     public static void main(String[] args) {
@@ -39,10 +52,23 @@ public class Application {
         // 경주 횟수 입력
         System.out.println("시도할 횟수는 몇 회인가요?");
         String num = readLine();
+        int n = 0;
         try {
-            checkNum(num);
+            n = checkNum(num);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
+        }
+
+        // Car 객체 목록 생성
+        ArrayList<Car> carList = new ArrayList<>();
+        for (String carName : cars) {
+            Car n_car = new Car(carName);
+            carList.add(n_car);
+        }
+        
+        // 입력받은 n번 만큼 round 진행
+        for (int i = 0; i < n; i++) {
+            roundResult(carList);
         }
     }
 }
